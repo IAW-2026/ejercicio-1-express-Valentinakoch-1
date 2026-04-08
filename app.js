@@ -1,25 +1,8 @@
 const express = require('express');
-const path = require('path');
 const app = express();
 
-// Rutas principales con páginas HTML distintas
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-app.get('/acerca', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'acerca.html'));
-});
-
-app.get('/contacto', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'contacto.html'));
-});
-
-// Middleware básico para manejo de errores
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: '¡Algo salió mal!' });
-});
+// Servir archivos estáticos desde la raíz del proyecto
+app.use(express.static(__dirname));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
