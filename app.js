@@ -1,8 +1,19 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 
-// Servir archivos estáticos desde la carpeta 'public'
-app.use(express.static('public'));
+// Rutas principales con páginas HTML distintas
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/acerca', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'acerca.html'));
+});
+
+app.get('/contacto', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'contacto.html'));
+});
 
 // Middleware básico para manejo de errores
 app.use((err, req, res, next) => {
