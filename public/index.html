@@ -3,14 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>Página Principal</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <main>
-    <h1>Bienvenido a la Página Principal</h1>
-    <p>Esta es la página de inicio de nuestro sitio web estático.</p>
-    <button id="greetButton">Saludar</button>
+  <header>
+    <nav>
+      <a href="/">Inicio</a>
+    </nav>
+  </header>
+  <main class="hero">
+    <section class="hero-card">
+      <p class="eyebrow">Bienvenido</p>
+      <h1>Mi página con Express</h1>
+      <p>Este es el ejercicio 5 de la guía de IAW.</p>
+
+      <h2>Formulario de Contacto</h2>
+      <form action="/contacto" method="POST">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <br>
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" required></textarea>
+        <br>
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
   </main>
-  <script src="script.js"></script>
+  <script src="/script.js"></script>
 </body>
 </html>
