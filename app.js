@@ -1,38 +1,38 @@
 const express = require('express');
-const path = require('path');
 const app = express();
 
-const escapeHtml = (value = '') =>
-  String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-
-// Middleware para parsear datos de formularios POST
-app.use(express.urlencoded({ extended: true }));
-
-// Servir archivos estáticos desde la carpeta 'public'
-app.use(express.static('public'));
+let contadorVisitas = 0;
 
 // Ruta principal de la aplicación
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Ruta POST para /contacto
-app.post('/contacto', (req, res) => {
-  const { nombre, mensaje } = req.body;
+  contadorVisitas += 1;
   res.send(`<!doctype html>
-            <html lang="es">
-            <meta charset="utf-8">
-            <title>Datos recibidos</title>
-            <h1>Datos enviados correctamente</h1>
-            <p><strong>Nombre:</strong> ${escapeHtml(nombre)}</p>
-            <p><strong>Mensaje:</strong> ${escapeHtml(mensaje)}</p>
-            <a href="/">Volver</a>`);
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador de visitas</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Inicio</a>
+    </nav>
+  </header>
+  <main class="hero">
+    <section class="hero-card">
+      <p class="eyebrow">Bienvenido</p>
+      <h1>Contador de visitas</h1>
+      <p>Este es el ejercicio 6 de la guia de IAW.</p>
+      <p><strong>Visitas a esta pagina:</strong> ${contadorVisitas}</p>
+    </section>
+  </main>
+</body>
+</html>`);
 });
+// Servir archivos estáticos desde la carpeta 'public'
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
