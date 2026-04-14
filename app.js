@@ -10,6 +10,8 @@ const escapeHtml = (value = '') =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
+const mensajes = [];
+
 app.use(express.urlencoded({ extended: true }));
 
 // Ruta principal de la aplicación
@@ -17,21 +19,31 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.post('/encuesta', (req, res) => {
-  const { lenguaje } = req.body;
+app.post('/mensajes', (req, res) => {
+  const mensaje = (req.body.mensaje || '').trim();
+
+  if (mensaje) {
+    mensajes.push(mensaje);
+  }
+
+  const listaMensajes = mensajes
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join('');
+
   res.send(`<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resultado encuesta</title>
+  <title>Mensajes enviados</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <main class="hero">
     <section class="hero-card">
-      <h1>Respuesta recibida</h1>
-      <p>Tu lenguaje favorito es: <strong>${escapeHtml(lenguaje)}</strong></p>
+      <h1>Mensajes enviados</h1>
+      <p>Total de mensajes: <strong>${mensajes.length}</strong></p>
+      <ul>${listaMensajes}</ul>
       <a href="/">Volver</a>
     </section>
   </main>
