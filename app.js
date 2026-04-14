@@ -1,36 +1,44 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 
-let contadorVisitas = 0;
+const escapeHtml = (value = '') =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+app.use(express.urlencoded({ extended: true }));
 
 // Ruta principal de la aplicación
 app.get('/', (req, res) => {
-  contadorVisitas += 1;
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.post('/encuesta', (req, res) => {
+  const { lenguaje } = req.body;
   res.send(`<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contador de visitas</title>
+  <title>Resultado encuesta</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/">Inicio</a>
-    </nav>
-  </header>
   <main class="hero">
     <section class="hero-card">
-      <p class="eyebrow">Bienvenido</p>
-      <h1>Contador de visitas</h1>
-      <p>Este es el ejercicio 6 de la guia de IAW.</p>
-      <p><strong>Visitas a esta pagina:</strong> ${contadorVisitas}</p>
+      <h1>Respuesta recibida</h1>
+      <p>Tu lenguaje favorito es: <strong>${escapeHtml(lenguaje)}</strong></p>
+      <a href="/">Volver</a>
     </section>
   </main>
 </body>
 </html>`);
 });
+
 // Servir archivos estáticos desde la carpeta 'public'
 app.use(express.static('public'));
 

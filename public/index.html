@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Página Principal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encuesta simple</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -13,10 +14,22 @@
   </header>
   <main class="hero">
     <section class="hero-card">
-      <p class="eyebrow">Bienvenido</p>
-      <h1>Mi página con Express</h1>
-      <p>Este es el ejercicio 6 de la guía de IAW.</p>
-      <p><strong>Visitas a esta página:</strong> {{VISITAS}}</p>
+      <p class="eyebrow">Ejercicio 7</p>
+      <h1>Encuesta simple</h1>
+      <p>¿Cual es tu lenguaje favorito?</p>
+      <form action="/encuesta" method="POST">
+        <label for="lenguaje">Elegi una opcion:</label>
+        <br>
+        <select id="lenguaje" name="lenguaje" required>
+          <option value="" disabled selected>Selecciona uno</option>
+          <option value="JavaScript">JavaScript</option>
+          <option value="Python">Python</option>
+          <option value="Java">Java</option>
+          <option value="C#">C#</option>
+        </select>
+        <br>
+        <button type="submit">Enviar respuesta</button>
+      </form>
     </section>
   </main>
 </body>
