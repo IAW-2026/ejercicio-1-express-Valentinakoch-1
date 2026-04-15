@@ -1,40 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('contactoForm');
-  const respuesta = document.getElementById('respuesta');
+  const boton = document.getElementById('btnFrase');
+  const frase = document.getElementById('frase');
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault(); // no recargues la pagina, yo lo hago con fetch
-
-    const formData = new FormData(form);
-    const payload = {
-      nombre: formData.get('nombre')?.toString().trim(),
-      mensaje: formData.get('mensaje')?.toString().trim(),
-    };
-
-    respuesta.textContent = 'Enviando mensaje...';
-    respuesta.className = 'respuesta';
+  boton.addEventListener('click', async () => {
+    frase.textContent = 'Cargando frase...';
+    frase.className = 'frase';
 
     try {
-      const response = await fetch('/api/contacto', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch('/frase');
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.mensaje || 'No se pudo enviar el mensaje.');
+        throw new Error('No se pudo obtener una frase.');
       }
 
-      respuesta.textContent = data.mensaje;
-      respuesta.classList.add('ok');
-      form.reset();
+      frase.textContent = data.frase;
+      frase.classList.add('ok');
     } catch (error) {
-      respuesta.textContent = error.message;
-      respuesta.classList.add('error');
+      frase.textContent = error.message;
+      frase.classList.add('error');
     }
   });
 });

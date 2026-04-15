@@ -2,6 +2,14 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+const frases = [
+  'Cada linea de codigo es una oportunidad para aprender algo nuevo.',
+  'La practica constante convierte errores en experiencia.',
+  'Resolver problemas pequenos todos los dias crea grandes resultados.',
+  'Si algo falla, depura con calma y observa los detalles.',
+  'Una buena idea implementada vale mas que mil ideas sin probar.',
+];
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -10,18 +18,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.post('/api/contacto', (req, res) => {
-  const { nombre, mensaje } = req.body;
 
-  if (!nombre || !mensaje) {
-    return res.status(400).json({
-      mensaje: 'Por favor, completa nombre y mensaje para continuar.',
-    });
-  }
-
-  return res.json({
-    mensaje: `Gracias por tu mensaje, ${nombre}. Te responderemos pronto.`,
-  });
+app.get('/frase', (req, res) => {
+  const indice = Math.floor(Math.random() * frases.length);
+  res.json({ frase: frases[indice] });
 });
 
 // Servir archivos estáticos desde la carpeta 'public'

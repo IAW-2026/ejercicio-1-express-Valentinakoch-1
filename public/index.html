@@ -3,27 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contacto con fetch</title>
+  <title>Generador de frases</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <main class="hero">
     <section class="hero-card">
-      <p class="eyebrow">Ejercicio 10</p>
-      <h1>Envio de datos con fetch</h1>
-      <p>Completa el formulario para enviar un <strong>POST</strong> a <strong>/api/contacto</strong>.</p>
+      <p class="eyebrow">Ejercicio 11</p>
+      <h1>Generador de frases aleatorias</h1>
+      <p>Haz clic en el boton para pedir una frase con <strong>fetch GET</strong> a <strong>/frase</strong>.</p>
 
-      <form id="contactoForm" class="contact-form">
-        <label for="nombre">Nombre</label>
-        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required>
+      <button id="btnFrase" type="button">Mostrar frase</button>
 
-        <label for="mensaje">Mensaje</label>
-        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje" required></textarea>
-
-        <button type="submit">Enviar mensaje</button>
-      </form>
-
-      <p id="respuesta" class="respuesta" aria-live="polite"></p>
+      <p id="frase" class="frase" aria-live="polite"></p>
     </section>
   </main>
   <script src="/script.js"></script>

@@ -47,40 +47,17 @@ button:hover {
   background: #ffcc66;
 }
 
-.contact-form {
-  margin-top: 1rem;
-  display: grid;
-  gap: 0.65rem;
-}
-
-.contact-form label {
-  font-weight: 600;
-}
-
-.contact-form input,
-.contact-form textarea {
-  width: 100%;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 10px;
-  padding: 0.75rem;
-  font: inherit;
-}
-
-.contact-form textarea {
-  resize: vertical;
-}
-
-.respuesta {
+.frase {
   min-height: 1.5rem;
   margin-top: 1rem;
   font-weight: 600;
+  line-height: 1.5;
 }
 
-.respuesta.ok {
+.frase.ok {
   color: #e6ffcf;
 }
 
-.respuesta.error {
+.frase.error {
   color: #ffd6d6;
 }
