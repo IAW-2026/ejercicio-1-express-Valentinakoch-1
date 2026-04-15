@@ -1,27 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const button = document.getElementById('cargarProductos');
-  const lista = document.getElementById('listaProductos');
+  const form = document.getElementById('contactoForm');
+  const respuesta = document.getElementById('respuesta');
 
-  button.addEventListener('click', async () => {
-    lista.innerHTML = '<li>Cargando productos...</li>';
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault(); // no recargues la pagina, yo lo hago con fetch
+
+    const formData = new FormData(form);
+    const payload = {
+      nombre: formData.get('nombre')?.toString().trim(),
+      mensaje: formData.get('mensaje')?.toString().trim(),
+    };
+
+    respuesta.textContent = 'Enviando mensaje...';
+    respuesta.className = 'respuesta';
 
     try {
-      const response = await fetch('/api/productos');
+      const response = await fetch('/api/contacto', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error('No se pudo cargar la lista de productos.');
+        throw new Error(data.mensaje || 'No se pudo enviar el mensaje.');
       }
 
-      const productos = await response.json();
-
-      lista.innerHTML = productos
-        .map(
-          (producto) =>
-            `<li>#${producto.id} - ${producto.nombre} ($${producto.precio})</li>`
-        )
-        .join('');
+      respuesta.textContent = data.mensaje;
+      respuesta.classList.add('ok');
+      form.reset();
     } catch (error) {
-      lista.innerHTML = `<li>${error.message}</li>`;
+      respuesta.textContent = error.message;
+      respuesta.classList.add('error');
     }
   });
 });

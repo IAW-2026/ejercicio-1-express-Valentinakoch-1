@@ -2,20 +2,26 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-const productos = [
-  { id: 1, nombre: 'Teclado mecanico', precio: 65 },
-  { id: 2, nombre: 'Mouse inalambrico', precio: 30 },
-  { id: 3, nombre: 'Monitor 24 pulgadas', precio: 180 },
-  { id: 4, nombre: 'Auriculares', precio: 45 },
-];
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Ruta principal de la aplicación
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/api/productos', (req, res) => {
-  res.json(productos);
+app.post('/api/contacto', (req, res) => {
+  const { nombre, mensaje } = req.body;
+
+  if (!nombre || !mensaje) {
+    return res.status(400).json({
+      mensaje: 'Por favor, completa nombre y mensaje para continuar.',
+    });
+  }
+
+  return res.json({
+    mensaje: `Gracias por tu mensaje, ${nombre}. Te responderemos pronto.`,
+  });
 });
 
 // Servir archivos estáticos desde la carpeta 'public'

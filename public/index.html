@@ -3,52 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>API de productos</title>
+  <title>Contacto con fetch</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/">Inicio</a>
-    </nav>
-  </header>
   <main class="hero">
     <section class="hero-card">
-      <p class="eyebrow">Ejercicio 9</p>
-      <h1>Simulacion de API con JSON</h1>
-      <p>Hace clic para traer productos desde <strong>/api/productos</strong>.</p>
-      <button id="cargarProductos">Cargar productos</button>
-      <ul id="listaProductos"></ul>
+      <p class="eyebrow">Ejercicio 10</p>
+      <h1>Envio de datos con fetch</h1>
+      <p>Completa el formulario para enviar un <strong>POST</strong> a <strong>/api/contacto</strong>.</p>
+
+      <form id="contactoForm" class="contact-form">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required>
+
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje" required></textarea>
+
+        <button type="submit">Enviar mensaje</button>
+      </form>
+
+      <p id="respuesta" class="respuesta" aria-live="polite"></p>
     </section>
   </main>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const button = document.getElementById('cargarProductos');
-      const lista = document.getElementById('listaProductos');
-
-      button.addEventListener('click', async () => {
-        lista.innerHTML = '<li>Cargando productos...</li>';
-
-        try {
-          const response = await fetch('/api/productos');
-
-          if (!response.ok) {
-            throw new Error('No se pudo cargar la lista de productos.');
-          }
-
-          const productos = await response.json();
-
-          lista.innerHTML = productos
-            .map(
-              (producto) =>
-                `<li>#${producto.id} - ${producto.nombre} ($${producto.precio})</li>`
-            )
-            .join('');
-        } catch (error) {
-          lista.innerHTML = `<li>${error.message}</li>`;
-        }
-      });
-    });
-  </script>
+  <script src="/script.js"></script>
 </body>
 </html>
